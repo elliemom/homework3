@@ -1,21 +1,11 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
-// Define variables
-var selectLowerCase;
-var selectUpperCase;
-var selectNumber;
-var selectSpecial;
-
-// Set variables  
-var plength = 0;
-var lowerCase = "abcdefghijklmnopqrstuvwxyz";
-// Uppercase conversion
-var upperCase = lowerCase.toUpperCase();
-var numbers = "1234567890";
-var specialCharacter = "!#$%&'()*+,-./:;?@][^_`{|}~'<=>";
-var userPassword = "";
-var passwordGroup = "";
+// Variable arrays 
+var lowerCase = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+var upperCase = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+var numbers = ["0","1","2","3","4","5","6","7","8","9"];
+var specialCharacter = ["!","@","#","$","%","^","&","*","(",")", "-", "+", ",", ".", "/", "~"];
 
 // Write password to the #password input
 function writePassword() {
@@ -29,53 +19,54 @@ function writePassword() {
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
-// Request length of the password
-var plength = parseInt(prompt("How many characters would you like your password to contain? Please enter a length of your password from 8-128.",""));
-
-// Require number
-while (isNaN(plength)) {
-var plength = parseInt(prompt("This is not a number. Please enter a number between 8 - 128.",""));
-} 
-
-// Require length    
-while (plength < 8 || plength > 128) {
-  var plength = parseInt(prompt("Enter length of password.* Length must be between 8 - 128 characters",""));
-  } 
-
-// Confirm lower case letters 
-var selectLowerCase = confirm("Click OK to confirm including lowercase characters.");
-// Confirm upper case letters
-var selectUpperCase = confirm("Click OK to confirm including uppercase characters.");
-//Confirm numeric characters 
-var selectNumber = confirm("Click OK to confirm including numeric characters.");
-//Confirm special characters
-var selectSpecial = confirm("Click OK to confirm including special characters.");
-
-// Call function to generate password 
-generatePassword();
-
-// Write generated password on page
-document.getElementById("password").innerHTML = userPassword; 
-
 // From selected options randomly generate password.
 function generatePassword() {
+
+  var selectLowerCase;
+  var selectUpperCase;
+  var selectNumber;
+  var selectSpecial;
+  var passwordResult = [];
+
+  // Confirm how many characters
+  var userPasswordLength = prompt("How many characters would you like your password to contain? Please enter a length of your password from 8-128.");
+
+  if ((userPasswordLength < 8) || (userPasswordLength > 128)) {
+    alert ("Length must be between 8 - 128 characters!");
+  }
+
+  else {
+
+    // Confirm lower case letters 
+    selectLowerCase = confirm("Click OK to confirm including lowercase characters.");
+    // Confirm upper case letters
+    selectUpperCase = confirm("Click OK to confirm including uppercase characters.");
+    //Confirm numeric characters 
+    selectNumber = confirm("Click OK to confirm including numeric characters.");
+    //Confirm special characters
+    selectSpecial = confirm("Click OK to confirm including special characters.");
+
+  }
   
-  if (selectLowerCase) {
-  passwordGroup += lowerCase;
+  if (selectLowerCase === true) {
+    passwordResult = passwordResult.concat(lowerCase)
   }
-  if (selectUpperCase) {
-  passwordGroup += upperCase;
+  if (selectUpperCase === true) {
+    passwordResult = passwordResult.concat(upperCase)
   }
-  if (selectNumber) {
-  passwordGroup += numbers;
+  if (selectNumber === true) {
+    passwordResult = passwordResult.concat(numbers)
   }
-  if (selectSpecial) {
-  passwordGroup += specialCharacter;
+  if (selectSpecial === true) {
+    passwordResult = passwordResult.concat(specialCharacter)
   }
-  for (let i = 0; i < plength; i++) {
-    userPassword += passwordGroup.charAt(
-    Math.floor(Math.random() * passwordGroup.length)
-    );
+
+  var userPassword = ""
+
+  for (var i = 0; i < userPasswordLength; i++) {
+    userPassword = userPassword + userPasswordLength[Math.floor(Math.random() * userPasswordLength.length)]
+
+    console.log(userPassword)
   }
   return userPassword;
 }
