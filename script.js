@@ -1,10 +1,21 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
-var lowerCharacters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-var upperCharacters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-var numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-var symbols = ['!', '@', '#', '$', '%', '^', '&', '*'];
+// Define variables
+var selectLowerCase;
+var selectUpperCase;
+var selectNumber;
+var selectSpecial;
+
+// Set variables  
+var plength = 0;
+var lowerCase = "abcdefghijklmnopqrstuvwxyz";
+// Uppercase conversion
+var upperCase = lowerCase.toUpperCase();
+var numbers = "1234567890";
+var specialCharacter = "!#$%&'()*+,-./:;?@][^_`{|}~'<=>";
+var userPassword = "";
+var passwordGroup = "";
 
 // Write password to the #password input
 function writePassword() {
@@ -18,60 +29,53 @@ function writePassword() {
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
-function generatePassword() {
+// Request length of the password
+var plength = parseInt(prompt("How many characters would you like your password to contain? Please enter a length of your password from 8-128.",""));
 
-var charactersLengths = prompt("How many characters would you like your password to contain?");
-var lowerCase = confirm("Click OK to confirm including lowercase characters.");
-var upperCase = confirm("Click OK to confirm including uppercase characters.");
-var numeric = confirm("Click OK to confirm including numeric characters.");
-var special = confirm("Click OK to confirm including special characters.");
-
-}
-
-let password = '';
-console.log(charactersLengths);
-console.log(lowerCase);
-console.log(upperCase);
-console.log(numeric);
-console.log(special);
-
-
-if(lowerCase === true && upperCase === true && numeric === true && special === true){
-  for(var i = 0; i <charLength; i++){
-    charPick = upperNum[Math.floor(Math.random()*upperNum.length)];
-    console.log(charPick);
-    password = password.toString()+charPick.toString();
-    console.log(password);
-  }
-}  
-//if uppercase but no numbers
-  else if(num != true && whichCase === true){
-    for(var i = 0; i <charLength; i++){
-    charPick = upperChars[Math.floor(Math.random()*upperChars.length)];
-    console.log(charPick);
-    password = password.toString()+charPick.toString();
-    console.log(password);
-  }
-}
-// numbers no uppercase
-  else if(num === true && whichCase != true){
-    for(var i = 0; i <charLength; i++){
-      charPick = characterNum[Math.floor(Math.random()*characterNum.length)];
-      console.log(charPick);
-      password = password.toString()+charPick.toString();
-      console.log(password);       
-    }
-  }
-  else if(num != true && whichCase != true){
-    for(var i = 0; i <charLength; i++){
-      charPick = characters[Math.floor(Math.random()*characters.length)];
-      console.log(charPick);
-      password = password.toString()+charPick.toString();
-      console.log(password);
+// Require number
+while (isNaN(plength)) {
+var plength = parseInt(prompt("This is not a number. Please enter a number between 8 - 128.",""));
 } 
+
+// Require length    
+while (plength < 8 || plength > 128) {
+  var plength = parseInt(prompt("Enter length of password.* Length must be between 8 - 128 characters",""));
+  } 
+
+// Confirm lower case letters 
+var selectLowerCase = confirm("Click OK to confirm including lowercase characters.");
+// Confirm upper case letters
+var selectUpperCase = confirm("Click OK to confirm including uppercase characters.");
+//Confirm numeric characters 
+var selectNumber = confirm("Click OK to confirm including numeric characters.");
+//Confirm special characters
+var selectSpecial = confirm("Click OK to confirm including special characters.");
+
+// Call function to generate password 
+generatePassword();
+
+// Write generated password on page
+document.getElementById("password").innerHTML = userPassword; 
+
+// From selected options randomly generate password.
+function generatePassword() {
+  
+  if (selectLowerCase) {
+  passwordGroup += lowerCase;
   }
-
-
-
-
-
+  if (selectUpperCase) {
+  passwordGroup += upperCase;
+  }
+  if (selectNumber) {
+  passwordGroup += numbers;
+  }
+  if (selectSpecial) {
+  passwordGroup += specialCharacter;
+  }
+  for (let i = 0; i < plength; i++) {
+    userPassword += passwordGroup.charAt(
+    Math.floor(Math.random() * passwordGroup.length)
+    );
+  }
+  return userPassword;
+}
