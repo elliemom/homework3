@@ -64,9 +64,10 @@ function generatePassword() {
   var userPassword = ""
 
   for (var i = 0; i < userPasswordLength; i++) {
-    userPassword = userPassword + userPasswordLength[Math.floor(Math.random() * userPasswordLength.length)]
+    userPassword = userPassword + passwordResult[Math.floor(Math.random() * passwordResult.length)]
 
     console.log(userPassword)
   }
   return userPassword;
+  
 }
